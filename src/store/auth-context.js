@@ -12,7 +12,7 @@ const AuthContext = React.createContext({
     We can also manage the isLoggedIn state from 
     this auth context file, 
 */
-const AuthContextProvider = (props) => {
+export const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,11 @@ const AuthContextProvider = (props) => {
         localStorage.setItem("isLoggedIn", "1");
         setIsLoggedIn(true);
     }
-  return <AuthContext.Provider> {props.children} </AuthContext.Provider>;
+  return <AuthContext.Provider value={{
+    isLoggedIn: isLoggedIn,
+    onLogout: logoutHandler,
+    onLogin: loginHandler,
+  }}> {props.children} </AuthContext.Provider>;
 };
 /*
  We will now need to import this context object and wrap it around all the most 
